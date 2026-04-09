@@ -193,3 +193,184 @@
 .stato-confermata { background: #e8f5e9; color: #2e7d32; }
 .stato-cancellata { background: #fce8e8; color: #c62828; }
 .stato-completata { background: #e8eaf6; color: #3949ab; }
+
+/* FILTRI */
+.admin-filtri {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.admin-filtri input {
+  padding: 8px 12px;
+  border: 1px solid #e8d5b0;
+  border-radius: 2px;
+  font-size: 13px;
+  font-family: var(--font-testo);
+  min-width: 260px;
+}
+
+.admin-filtri select {
+  padding: 8px 12px;
+  border: 1px solid #e8d5b0;
+  border-radius: 2px;
+  font-size: 13px;
+  font-family: var(--font-testo);
+}
+
+.btn-admin-filtro {
+  background: var(--colore-legno);
+  color: var(--colore-crema);
+  border: none;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-family: var(--font-testo);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.btn-admin-reset {
+  font-size: 12px;
+  color: #aaa;
+  text-decoration: none;
+}
+
+.btn-admin-reset:hover { color: var(--colore-terra); }
+
+/* AZIONI */
+.form-stato {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.select-stato {
+  font-size: 12px;
+  padding: 4px 6px;
+  border: 1px solid #e8d5b0;
+  border-radius: 2px;
+  font-family: var(--font-testo);
+}
+
+.btn-stato {
+  font-size: 11px;
+  padding: 4px 10px;
+  background: var(--colore-sabbia);
+  border: 1px solid #e8d5b0;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: var(--font-testo);
+  white-space: nowrap;
+}
+
+.btn-stato:hover { background: #e8d5b0; }
+
+.nota-prenotazione {
+  font-size: 11px;
+  color: #888;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.admin-table small {
+  color: #aaa;
+  font-size: 11px;
+}
+
+/* IMPOSTAZIONI */
+.imp-body { padding: 8px 0; }
+
+.imp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0e8d8;
+  gap: 24px;
+}
+
+.imp-row:last-child { border-bottom: none; }
+
+.imp-label { flex: 1; }
+
+.imp-label strong {
+  display: block;
+  font-size: 14px;
+  color: var(--colore-terra);
+  margin-bottom: 3px;
+}
+
+.imp-label span {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.imp-control { flex-shrink: 0; }
+
+.imp-select {
+  padding: 8px 12px;
+  border: 1px solid #e8d5b0;
+  border-radius: 2px;
+  font-size: 14px;
+  font-family: var(--font-testo);
+  color: var(--colore-terra);
+}
+
+.imp-input-num {
+  width: 80px;
+  padding: 8px 12px;
+  border: 1px solid #e8d5b0;
+  border-radius: 2px;
+  font-size: 14px;
+  font-family: var(--font-testo);
+  color: var(--colore-terra);
+  text-align: center;
+}
+
+/* TOGGLE */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.toggle input { opacity: 0; width: 0; height: 0; }
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #e0d5c5;
+  border-radius: 24px;
+  transition: background 0.2s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle input:checked + .toggle-slider { background: var(--colore-legno); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+/* ALERT OK */
+.alert--ok {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+}
