@@ -817,3 +817,176 @@ a { color: inherit; text-decoration: none; }
   font-style: italic;
   margin-top: 14px;
 }
+
+/* ── STAGIONE SELECTOR ── */
+.stagione-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-bottom: 1px solid #e8d5b0;
+  background: #fff;
+}
+
+.stagione-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 48px;
+  font-family: var(--font-titoli);
+  font-size: 18px;
+  font-weight: 400;
+  color: #bbb;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: -1px;
+}
+
+.stagione-tab:hover { color: var(--colore-terra); }
+
+.stagione-tab.active {
+  color: var(--colore-terra);
+  border-bottom-color: var(--colore-legno);
+}
+
+.stagione-tab-icon { font-size: 16px; color: var(--colore-legno); opacity: 0.7; }
+
+/* ── ATTIVITA ── */
+.attivita-intro { padding: 56px 24px 32px; }
+
+.attivita-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 0 24px 64px;
+}
+
+.attivita-card {
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.2s;
+}
+
+.attivita-card:hover { transform: translateY(-3px); }
+
+.attivita-card-head { height: 160px; }
+
+.attivita-card-head--trekking   { background-color: #4a5a30; }
+.attivita-card-head--mtb        { background-color: #3a5028; }
+.attivita-card-head--gonfiabile { background-color: #5a3a50; }
+.attivita-card-head--natura     { background-color: #405030; }
+.attivita-card-head--sci        { background-color: #1a3050; }
+.attivita-card-head--scuola     { background-color: #1a2840; }
+.attivita-card-head--snowpark   { background-color: #203858; }
+.attivita-card-head--fondo      { background-color: #182838; }
+.attivita-card-head--ciaspole   { background-color: #1c3048; }
+
+.attivita-card-body { padding: 20px; }
+
+.attivita-card-body h3 {
+  font-family: var(--font-titoli);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  margin-bottom: 8px;
+}
+
+.attivita-card-body p {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.6;
+}
+
+/* ── STATO IMPIANTI ── */
+.stato-impianti {
+  background: var(--colore-sabbia);
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  padding: 28px;
+  margin-bottom: 40px;
+}
+
+.impianti-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.impianti-header h3 {
+  font-family: var(--font-titoli);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--colore-terra);
+}
+
+.impianti-data { font-size: 12px; color: #aaa; }
+
+.impianti-grid { display: flex; flex-direction: column; gap: 0; }
+
+.impianto-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e8d5b0;
+  font-size: 14px;
+}
+
+.impianto-row:last-child { border-bottom: none; }
+.impianto-nome { color: var(--colore-terra); }
+
+.impianto-stato {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.stato--aperto   { background: #e8f5e9; color: #2e7d32; }
+.stato--chiuso   { background: #fce8e8; color: #c62828; }
+.stato--parziale { background: #fff8e1; color: #f57f17; }
+
+.impianti-note {
+  font-size: 12px;
+  color: #aaa;
+  font-style: italic;
+  margin-top: 16px;
+}
+
+/* ── SKIPASS E NOLEGGIO ── */
+.section-skipass { padding: 0 24px 64px; }
+
+.skipass-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.skipass-box {
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  padding: 28px;
+}
+
+.skipass-box h3 {
+  font-family: var(--font-titoli);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  margin-bottom: 10px;
+}
+
+.skipass-box p {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.skipass-box a { font-size: 13px; color: var(--colore-legno); }
