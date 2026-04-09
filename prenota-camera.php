@@ -81,6 +81,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $codice
             ]);
 
+            require_once 'includes/mailer.php';
+            invia_email_conferma_camera([
+                'nome'      => $nome,
+                'cognome'   => $cognome,
+                'email'     => $email,
+                'codice'    => $codice,
+                'numero'    => $camera['numero'],
+                'piano'     => $camera['piano'],
+                'check_in'  => $check_in,
+                'check_out' => $check_out,
+                'ospiti'    => $ospiti,
+            ]);
+
             $successo = true;
         }
     }
