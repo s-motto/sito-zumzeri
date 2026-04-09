@@ -71,29 +71,30 @@ require_once 'includes/header.php';
                 <button class="prenota-tab" id="tab-tavoli" onclick="setTab('tavoli')">Ristorante</button>
             </div>
 
-            <div id="form-camere" class="prenota-form">
+            <form method="GET" action="/zumzeri/prenota.php" id="form-camere" class="prenota-form">
                 <div class="form-field">
                     <label>Arrivo</label>
-                    <input type="date" name="arrivo">
+                    <input type="date" name="check_in">
                 </div>
                 <div class="form-field">
                     <label>Partenza</label>
-                    <input type="date" name="partenza">
+                    <input type="date" name="check_out">
                 </div>
                 <div class="form-field">
                     <label>Ospiti</label>
                     <select name="ospiti">
-                        <option>1 ospite</option>
-                        <option selected>2 ospiti</option>
-                        <option>3 ospiti</option>
-                        <option>4 ospiti</option>
-                        <option>5+ ospiti</option>
+                        <option value="1">1 ospite</option>
+                        <option value="2" selected>2 ospiti</option>
+                        <option value="3">3 ospiti</option>
+                        <option value="4">4 ospiti</option>
+                        <option value="5">5 ospiti</option>
+                        <option value="6">6 ospiti</option>
                     </select>
                 </div>
-                <button class="btn-prenota-form">Verifica disponibilità</button>
-            </div>
+                <button type="submit" class="btn-prenota-form">Verifica disponibilità</button>
+            </form>
 
-            <div id="form-tavoli" class="prenota-form" style="display:none">
+            <form method="GET" action="/zumzeri/prenota-ristorante.php" id="form-tavoli" class="prenota-form" style="display:none">
                 <div class="form-field">
                     <label>Data</label>
                     <input type="date" name="data">
@@ -101,23 +102,23 @@ require_once 'includes/header.php';
                 <div class="form-field">
                     <label>Turno</label>
                     <select name="turno">
-                        <option>Pranzo</option>
-                        <option>Cena</option>
+                        <option value="pranzo">Pranzo</option>
+                        <option value="cena">Cena</option>
                     </select>
                 </div>
                 <div class="form-field">
                     <label>Persone</label>
                     <select name="persone">
-                        <option>1 persona</option>
-                        <option selected>2 persone</option>
-                        <option>3 persone</option>
-                        <option>4 persone</option>
-                        <option>6 persone</option>
-                        <option>8+ persone</option>
+                        <option value="1">1 persona</option>
+                        <option value="2" selected>2 persone</option>
+                        <option value="3">3 persone</option>
+                        <option value="4">4 persone</option>
+                        <option value="6">6 persone</option>
+                        <option value="8">8 persone</option>
                     </select>
                 </div>
-                <button class="btn-prenota-form">Verifica disponibilità</button>
-            </div>
+                <button type="submit" class="btn-prenota-form">Verifica disponibilità</button>
+            </form>
 
             <p class="prenota-note" id="prenota-note">Ristorante aperto sabato e domenica · Impianti chiusi fino a dicembre</p>
         </div>
