@@ -65,6 +65,7 @@ $prenotazioni = $stmt->fetchAll();
             <a href="/zumzeri/admin/index.php">Dashboard</a>
             <a href="/zumzeri/admin/bookings/camere.php" class="active">Prenotazioni camere</a>
             <a href="/zumzeri/admin/bookings/ristorante.php">Prenotazioni ristorante</a>
+            <a href="/zumzeri/admin/camere.php">Gestione camere</a>
             <a href="/zumzeri/admin/impostazioni.php">Impostazioni</a>
         </nav>
         <div class="admin-footer">
