@@ -7,11 +7,12 @@ $risultati = [];
 $cercato = false;
 $errore = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cerca'])) {
-    $check_in  = $_POST['check_in'] ?? '';
-    $check_out = $_POST['check_out'] ?? '';
-    $ospiti    = (int)($_POST['ospiti'] ?? 1);
+if (isset($_POST['cerca']) || (isset($_GET['check_in']) && isset($_GET['check_out']))) {
+    $check_in  = $_POST['check_in']  ?? $_GET['check_in']  ?? '';
+    $check_out = $_POST['check_out'] ?? $_GET['check_out'] ?? '';
+    $ospiti    = (int)($_POST['ospiti'] ?? $_GET['ospiti'] ?? 1);
     $cercato   = true;
+
 
     if (empty($check_in) || empty($check_out)) {
         $errore = 'Seleziona le date di arrivo e partenza.';
