@@ -1175,3 +1175,130 @@ a { color: inherit; text-decoration: none; }
 }
 
 .form-gruppo textarea { resize: vertical; }
+
+/* ── RESPONSIVE MOBILE ── */
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  .header-inner { padding: 0 16px; }
+
+  .main-nav {
+    display: none;
+  }
+
+  /* HERO */
+  .hero-title { font-size: 36px; }
+  .hero-ctas { flex-direction: column; }
+  .btn-primary, .btn-outline { text-align: center; }
+
+  /* HERO BOTTONI */
+  .hero-ctas {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero { padding-bottom: 32px; }
+
+  /* INFO BAR */
+  .info-bar { flex-wrap: wrap; }
+  .info-item {
+    width: 50%;
+    border-right: none;
+    border-bottom: 1px solid #e8d5b0;
+  }
+
+  /* CARDS STRUTTURE */
+  .cards-strutture { grid-template-columns: 1fr; }
+
+  /* SEZIONE PRENOTA */
+  .prenota-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-field {
+    width: 100%;
+  }
+
+  .form-field input,
+  .form-field select {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .btn-prenota-form { width: 100%; }
+
+  /* SERVIZI HOME */
+  .servizi-grid { grid-template-columns: 1fr 1fr; }
+
+  /* PAGE HERO */
+  .page-hero-title { font-size: 28px; }
+
+  /* INTRO PAGINE */
+  .page-intro {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 16px;
+  }
+
+  .intro-dati { grid-template-columns: 1fr 1fr; }
+
+  /* CAMERE */
+  .camere-grid { grid-template-columns: 1fr; }
+
+  /* SERVIZI GRAN BAITA */
+  .servizi-gb-grid { grid-template-columns: 1fr 1fr; }
+
+  /* MENU RIFUGIO */
+  .menu-grid { grid-template-columns: 1fr; }
+
+  /* ORARI */
+  .orari-grid { grid-template-columns: 1fr; }
+
+  /* SKIPASS */
+  .skipass-grid { grid-template-columns: 1fr; }
+
+  /* STAGIONE SELECTOR */
+  .stagione-tab { padding: 16px 28px; font-size: 16px; }
+
+  /* ATTIVITA GRID */
+  .attivita-grid { grid-template-columns: 1fr; }
+
+  /* WEBCAM */
+  .webcam-grid--due { grid-template-columns: 1fr; }
+
+  /* CONTATTI */
+  .contatti-grid { grid-template-columns: 1fr; }
+
+  .contatti-mappa {
+    height: 300px;
+    position: static;
+  }
+
+  /* FORM CONTATTO */
+  .form-row { grid-template-columns: 1fr; }
+
+  /* FOOTER */
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+  /* CONTAINER PADDING */
+  .container { padding: 0 16px; }
+  .section-strutture,
+  .section-orari,
+  .section-servizi-gb { padding: 40px 16px; }
+}
+
+@media (max-width: 480px) {
+
+  /* SERVIZI SU UNA COLONNA */
+  .servizi-grid { grid-template-columns: 1fr; }
+  .servizi-gb-grid { grid-template-columns: 1fr; }
+  .intro-dati { grid-template-columns: 1fr 1fr; }
+
+  /* FOOTER SU UNA COLONNA */
+  .footer-inner { grid-template-columns: 1fr; }
+
+  /* INFO BAR SU UNA COLONNA */
+  .info-item { width: 100%; }
+}
