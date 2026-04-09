@@ -74,11 +74,11 @@ require_once 'includes/header.php';
             <form method="GET" action="/zumzeri/prenota.php" id="form-camere" class="prenota-form">
                 <div class="form-field">
                     <label>Arrivo</label>
-                    <input type="date" name="check_in">
+                    <input type="date" name="check_in" required>
                 </div>
                 <div class="form-field">
                     <label>Partenza</label>
-                    <input type="date" name="check_out">
+                    <input type="date" name="check_out" required>
                 </div>
                 <div class="form-field">
                     <label>Ospiti</label>
@@ -97,7 +97,7 @@ require_once 'includes/header.php';
             <form method="GET" action="/zumzeri/prenota-ristorante.php" id="form-tavoli" class="prenota-form" style="display:none">
                 <div class="form-field">
                     <label>Data</label>
-                    <input type="date" name="data">
+                    <input type="date" name="data" required>
                 </div>
                 <div class="form-field">
                     <label>Turno</label>

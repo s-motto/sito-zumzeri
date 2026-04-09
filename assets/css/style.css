@@ -1589,3 +1589,69 @@ a { color: inherit; text-decoration: none; }
   border-radius: 4px;
   overflow: hidden;
 }
+
+/* ── RISTORANTE INFO BOX ── */
+.ristorante-info-box {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.ristorante-info-item {
+  background: var(--colore-sabbia);
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  padding: 16px;
+  text-align: center;
+}
+
+.ristorante-info-item strong {
+  display: block;
+  font-size: 14px;
+  color: var(--colore-terra);
+  margin-bottom: 4px;
+}
+
+.ristorante-info-item span {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ── DISPONIBILITA CARD ── */
+.disponibilita-card {
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.disponibilita-card--ok {
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+}
+
+.disponibilita-card h3 {
+  font-family: var(--font-titoli);
+  font-size: 18px;
+  font-weight: 400;
+  color: #2e7d32;
+  margin-bottom: 6px;
+}
+
+.disponibilita-card p {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.coperti-rimasti { color: #666 !important; }
+.coperti-rimasti strong { color: #2e7d32; }
+
+@media (max-width: 768px) {
+  .ristorante-info-box { grid-template-columns: 1fr 1fr; }
+  .disponibilita-card { flex-direction: column; align-items: flex-start; }
+}
