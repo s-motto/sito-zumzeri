@@ -1,9 +1,7 @@
 <footer class="site-footer">
     <div class="footer-inner">
         <div class="footer-col">
-            <span class="footer-logo">
-                <img src="/zumzeri/assets/img/logo.png" alt="Zum Zeri" class="logo-footer-img">
-            </span>
+            <img src="/zumzeri/assets/img/logo.png" alt="Zum Zeri" class="logo-footer-img">
             <p>Passo dei Due Santi, Zeri (MS)<br>
                 Lunigiana — 1400 m s.l.m.</p>
         </div>
@@ -23,11 +21,26 @@
             <a href="https://www.instagram.com/zum_zeri/" target="_blank">Instagram</a>
         </div>
     </div>
+
+    <!-- PARTNER -->
+    <div class="footer-partner">
+        <a href="https://www.facebook.com/ristorantepizzeriakmzeri/" target="_blank" rel="noopener">
+            <img src="/zumzeri/assets/img/km0-zumzeri.png" alt="Km Zero Zeri">
+        </a>
+        <a href="https://www.facebook.com/vallizeri/" target="_blank" rel="noopener">
+            <img src="/zumzeri/assets/img/vallizeri-zumzeri-tondo.png" alt="Valli Zeri">
+        </a>
+        <a href="https://www.meteoapuane.it/" target="_blank" rel="noopener">
+            <img src="/zumzeri/assets/img/meteo-apuane.png" alt="Meteo Apuane">
+        </a>
+    </div>
+
     <div class="footer-bottom">
         <span>&copy; <?= date('Y') ?> Zum Zeri · Passo dei Due Santi</span>
         <a href="/zumzeri/privacy.php">Privacy Policy</a>
     </div>
 </footer>
+
 <!-- COOKIE BANNER -->
 <div id="cookie-banner" class="cookie-banner" style="display:none;">
     <div class="cookie-banner-inner">
