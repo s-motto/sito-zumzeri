@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
     $stato = $_POST['stato'];
     $stati_validi = ['in_attesa', 'confermata', 'cancellata'];
     if (in_array($stato, $stati_validi)) {
-        // Leggi stato precedente
         $stmt = $pdo->prepare("SELECT stato FROM prenotazioni_ristorante WHERE id = ?");
         $stmt->execute([$id]);
         $stato_precedente = $stmt->fetchColumn();
@@ -18,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
         $stmt = $pdo->prepare("UPDATE prenotazioni_ristorante SET stato = ? WHERE id = ?");
         $stmt->execute([$stato, $id]);
 
-        // Invia email di cancellazione solo se lo stato cambia a "cancellata"
         if ($stato === 'cancellata' && $stato_precedente !== 'cancellata') {
             $stmt = $pdo->prepare("SELECT * FROM prenotazioni_ristorante WHERE id = ?");
             $stmt->execute([$id]);
@@ -75,6 +73,39 @@ $stmt->execute($params);
 $prenotazioni = $stmt->fetchAll();
 
 $giorni_ita = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+
+// Export CSV
+if (isset($_GET['export']) && $_GET['export'] === 'csv') {
+    header('Content-Type: text/csv; charset=UTF-8');
+    header('Content-Disposition: attachment; filename="prenotazioni_ristorante_' . date('Y-m-d') . '.csv"');
+    header('Pragma: no-cache');
+
+    $out = fopen('php://output', 'w');
+    fprintf($out, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM per Excel
+
+    fputcsv($out, ['Codice', 'Nome', 'Cognome', 'Email', 'Telefono', 'Data', 'Turno', 'Persone', 'Stato', 'Note', 'Ricevuta il'], ';');
+
+    foreach ($prenotazioni as $p) {
+        $giorno_num = (int)date('w', strtotime($p['giorno']));
+        $data_leggibile = $giorni_ita[$giorno_num] . ' ' . date('d/m/Y', strtotime($p['giorno']));
+        fputcsv($out, [
+            $p['codice'],
+            $p['nome'],
+            $p['cognome'],
+            $p['email'],
+            $p['telefono'] ?? '',
+            $data_leggibile,
+            ucfirst($p['turno']),
+            $p['persone'],
+            ucfirst(str_replace('_', ' ', $p['stato'])),
+            $p['note'] ?? '',
+            date('d/m/Y H:i', strtotime($p['creata_il'])),
+        ], ';');
+    }
+
+    fclose($out);
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -108,7 +139,8 @@ $giorni_ita = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Ven
     <main class="admin-main">
         <div class="admin-header">
             <h1>Prenotazioni ristorante</h1>
-            <span class="admin-date"><?= count($prenotazioni) ?> prenotazioni</span>
+            <a href="?stato=<?= urlencode($filtro_stato) ?>&cerca=<?= urlencode($filtro_cerca) ?>&export=csv"
+                class="btn-admin-filtro" style="text-decoration:none;">↓ Esporta CSV</a>
         </div>
 
         <!-- FILTRI -->
@@ -126,6 +158,13 @@ $giorni_ita = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Ven
                 <a href="/zumzeri/admin/bookings/ristorante.php" class="btn-admin-reset">Azzera</a>
             <?php endif; ?>
         </form>
+
+        <div style="font-size:12px; color:#aaa; margin-bottom:12px;">
+            <?= count($prenotazioni) ?> prenotazioni
+            <?php if ($filtro_stato || $filtro_cerca): ?>
+                — il CSV esporterà solo i risultati filtrati
+            <?php endif; ?>
+        </div>
 
         <!-- TABELLA -->
         <div class="admin-section">

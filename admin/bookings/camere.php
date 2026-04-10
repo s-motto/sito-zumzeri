@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
     $stato = $_POST['stato'];
     $stati_validi = ['in_attesa', 'confermata', 'cancellata', 'completata'];
     if (in_array($stato, $stati_validi)) {
-        // Leggi stato precedente
         $stmt = $pdo->prepare("SELECT stato FROM prenotazioni_camere WHERE id = ?");
         $stmt->execute([$id]);
         $stato_precedente = $stmt->fetchColumn();
@@ -18,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
         $stmt = $pdo->prepare("UPDATE prenotazioni_camere SET stato = ? WHERE id = ?");
         $stmt->execute([$stato, $id]);
 
-        // Invia email di cancellazione solo se lo stato cambia a "cancellata"
         if ($stato === 'cancellata' && $stato_precedente !== 'cancellata') {
             $stmt = $pdo->prepare("
                 SELECT pc.*, c.numero, c.piano
@@ -77,6 +75,41 @@ $sql = "
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $prenotazioni = $stmt->fetchAll();
+
+// Export CSV
+if (isset($_GET['export']) && $_GET['export'] === 'csv') {
+    header('Content-Type: text/csv; charset=UTF-8');
+    header('Content-Disposition: attachment; filename="prenotazioni_camere_' . date('Y-m-d') . '.csv"');
+    header('Pragma: no-cache');
+
+    $out = fopen('php://output', 'w');
+    fprintf($out, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM per Excel
+
+    fputcsv($out, ['Codice', 'Nome', 'Cognome', 'Email', 'Telefono', 'Camera', 'Piano', 'Check-in', 'Check-out', 'Notti', 'Ospiti', 'Stato', 'Note', 'Ricevuta il'], ';');
+
+    foreach ($prenotazioni as $p) {
+        $notti = (new DateTime($p['check_in']))->diff(new DateTime($p['check_out']))->days;
+        fputcsv($out, [
+            $p['codice'],
+            $p['nome'],
+            $p['cognome'],
+            $p['email'],
+            $p['telefono'] ?? '',
+            'Camera ' . $p['numero'],
+            'Piano ' . $p['piano'],
+            date('d/m/Y', strtotime($p['check_in'])),
+            date('d/m/Y', strtotime($p['check_out'])),
+            $notti,
+            $p['ospiti'],
+            ucfirst(str_replace('_', ' ', $p['stato'])),
+            $p['note'] ?? '',
+            date('d/m/Y H:i', strtotime($p['creata_il'])),
+        ], ';');
+    }
+
+    fclose($out);
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -110,7 +143,8 @@ $prenotazioni = $stmt->fetchAll();
     <main class="admin-main">
         <div class="admin-header">
             <h1>Prenotazioni camere</h1>
-            <span class="admin-date"><?= count($prenotazioni) ?> prenotazioni</span>
+            <a href="?stato=<?= urlencode($filtro_stato) ?>&cerca=<?= urlencode($filtro_cerca) ?>&export=csv"
+                class="btn-admin-filtro" style="text-decoration:none;">↓ Esporta CSV</a>
         </div>
 
         <!-- FILTRI -->
@@ -129,6 +163,13 @@ $prenotazioni = $stmt->fetchAll();
                 <a href="/zumzeri/admin/bookings/camere.php" class="btn-admin-reset">Azzera</a>
             <?php endif; ?>
         </form>
+
+        <div style="font-size:12px; color:#aaa; margin-bottom:12px;">
+            <?= count($prenotazioni) ?> prenotazioni
+            <?php if ($filtro_stato || $filtro_cerca): ?>
+                — il CSV esporterà solo i risultati filtrati
+            <?php endif; ?>
+        </div>
 
         <!-- TABELLA -->
         <div class="admin-section">
