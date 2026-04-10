@@ -39,6 +39,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
                 ]);
             }
         }
+
+        if ($stato === 'confermata' && $stato_precedente !== 'confermata') {
+            $stmt = $pdo->prepare("SELECT * FROM prenotazioni_ristorante WHERE id = ?");
+            $stmt->execute([$id]);
+            $prenotazione = $stmt->fetch();
+
+            if ($prenotazione) {
+                $giorni_ita = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+                $giorno_num = (int)date('w', strtotime($prenotazione['giorno']));
+                $data_leggibile = $giorni_ita[$giorno_num] . ' ' . date('d/m/Y', strtotime($prenotazione['giorno']));
+
+                require_once '../../includes/mailer.php';
+                invia_email_conferma_definitiva_ristorante([
+                    'nome'           => $prenotazione['nome'],
+                    'cognome'        => $prenotazione['cognome'],
+                    'email'          => $prenotazione['email'],
+                    'codice'         => $prenotazione['codice'],
+                    'data_leggibile' => $data_leggibile,
+                    'turno'          => $prenotazione['turno'],
+                    'persone'        => $prenotazione['persone'],
+                ]);
+            }
+        }
     }
     header('Location: /zumzeri/admin/bookings/ristorante.php?' . http_build_query(['stato' => $_GET['stato'] ?? '', 'cerca' => $_GET['cerca'] ?? '']));
     exit;

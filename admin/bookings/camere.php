@@ -41,6 +41,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
                 ]);
             }
         }
+
+        if ($stato === 'confermata' && $stato_precedente !== 'confermata') {
+            $stmt = $pdo->prepare("
+                SELECT pc.*, c.numero, c.piano
+                FROM prenotazioni_camere pc
+                JOIN camere c ON pc.camera_id = c.id
+                WHERE pc.id = ?
+            ");
+            $stmt->execute([$id]);
+            $prenotazione = $stmt->fetch();
+
+            if ($prenotazione) {
+                require_once '../../includes/mailer.php';
+                invia_email_conferma_definitiva_camera([
+                    'nome'      => $prenotazione['nome'],
+                    'cognome'   => $prenotazione['cognome'],
+                    'email'     => $prenotazione['email'],
+                    'codice'    => $prenotazione['codice'],
+                    'numero'    => $prenotazione['numero'],
+                    'piano'     => $prenotazione['piano'],
+                    'check_in'  => $prenotazione['check_in'],
+                    'check_out' => $prenotazione['check_out'],
+                    'ospiti'    => $prenotazione['ospiti'],
+                ]);
+            }
+        }
     }
     header('Location: /zumzeri/admin/bookings/camere.php?' . http_build_query(['stato' => $_GET['stato'] ?? '', 'cerca' => $_GET['cerca'] ?? '']));
     exit;
