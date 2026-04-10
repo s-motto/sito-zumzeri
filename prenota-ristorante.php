@@ -7,6 +7,21 @@ $risultato = null;
 $cercato = false;
 $errore = '';
 
+// Controlla modalità self-service e ristorante attivo
+$stmt = $pdo->prepare("SELECT valore FROM impostazioni WHERE chiave = 'modalita_selfservice'");
+$stmt->execute();
+$selfservice = $stmt->fetchColumn();
+
+$stmt = $pdo->prepare("SELECT valore FROM impostazioni WHERE chiave = 'ristorante_attivo'");
+$stmt->execute();
+$ristorante_attivo = $stmt->fetchColumn();
+
+// Blocca se ristorante completamente disattivo
+if ($ristorante_attivo === '0') {
+    $errore = 'Le prenotazioni online sono temporaneamente disabilitate. Contattaci direttamente.';
+    $cercato = true;
+}
+
 // Giorni aperti: sabato (6) e domenica (0)
 function giorno_aperto(string $data): bool
 {
@@ -18,8 +33,8 @@ function giorno_aperto(string $data): bool
 function turni_disponibili(string $data): array
 {
     $giorno = (int)date('w', strtotime($data));
-    if ($giorno === 6) return ['pranzo', 'cena']; // sabato
-    if ($giorno === 0) return ['pranzo'];          // domenica solo pranzo
+    if ($giorno === 6) return ['pranzo', 'cena'];
+    if ($giorno === 0) return ['pranzo'];
     return [];
 }
 
@@ -28,8 +43,7 @@ $data_cercata = '';
 $turno_cercato = '';
 $persone_cercate = 2;
 
-
-if (isset($_POST['cerca']) || isset($_GET['data'])) {
+if (!$errore && (isset($_POST['cerca']) || isset($_GET['data']))) {
     $data_cercata    = $_POST['data']    ?? $_GET['data']    ?? '';
     $turno_cercato   = $_POST['turno']   ?? $_GET['turno']   ?? 'pranzo';
     $persone_cercate = (int)($_POST['persone'] ?? $_GET['persone'] ?? 2);
@@ -43,15 +57,15 @@ if (isset($_POST['cerca']) || isset($_GET['data'])) {
         $errore = 'Il ristorante è aperto solo il sabato e la domenica. Scegli un\'altra data.';
     } elseif (!in_array($turno_cercato, turni_disponibili($data_cercata))) {
         $errore = 'La cena è disponibile solo il sabato. La domenica è aperto solo a pranzo.';
+    } elseif ($selfservice === '1' && $turno_cercato === 'pranzo') {
+        $errore = 'Il pranzo è attualmente in modalità self-service. Puoi prenotare solo per la cena del sabato.';
     } elseif ($persone_cercate < 1 || $persone_cercate > 40) {
         $errore = 'Numero di persone non valido.';
     } else {
-        // Coperti massimi dalle impostazioni
         $stmt = $pdo->prepare("SELECT valore FROM impostazioni WHERE chiave = ?");
         $stmt->execute(['coperti_max_' . $turno_cercato]);
         $coperti_max = (int)($stmt->fetchColumn() ?? 40);
 
-        // Coperti già prenotati per quel giorno e turno
         $stmt = $pdo->prepare("
             SELECT COALESCE(SUM(persone), 0)
             FROM prenotazioni_ristorante
@@ -88,13 +102,11 @@ if (isset($_POST['cerca']) || isset($_GET['data'])) {
     <section class="section-prenota-page">
         <div class="container">
 
-            <!-- TABS -->
             <div class="prenota-page-tabs">
                 <a href="/zumzeri/prenota.php" class="prenota-page-tab">Camere</a>
                 <a href="/zumzeri/prenota-ristorante.php" class="prenota-page-tab active">Ristorante</a>
             </div>
 
-            <!-- INFO APERTURA -->
             <div class="ristorante-info-box">
                 <div class="ristorante-info-item">
                     <strong>Sabato</strong>
@@ -114,74 +126,88 @@ if (isset($_POST['cerca']) || isset($_GET['data'])) {
                 </div>
             </div>
 
-            <!-- FORM RICERCA -->
-            <form method="POST" class="form-ricerca">
-                <div class="form-ricerca-grid">
-                    <div class="form-gruppo">
-                        <label for="data">Data</label>
-                        <input type="date" id="data" name="data"
-                            min="<?= date('Y-m-d') ?>"
-                            value="<?= htmlspecialchars($data_cercata) ?>"
-                            required>
-                    </div>
-                    <div class="form-gruppo">
-                        <label for="turno">Turno</label>
-                        <select id="turno" name="turno">
-                            <option value="pranzo" <?= $turno_cercato === 'pranzo' ? 'selected' : '' ?>>Pranzo</option>
-                            <option value="cena" <?= $turno_cercato === 'cena' ? 'selected' : '' ?>>Cena</option>
-                        </select>
-                    </div>
-                    <div class="form-gruppo">
-                        <label for="persone">Persone</label>
-                        <select id="persone" name="persone">
-                            <?php for ($i = 1; $i <= 20; $i++): ?>
-                                <option value="<?= $i ?>" <?= $persone_cercate == $i ? 'selected' : '' ?>>
-                                    <?= $i ?> <?= $i === 1 ? 'persona' : 'persone' ?>
-                                </option>
-                            <?php endfor; ?>
-                        </select>
-                    </div>
-                    <button type="submit" name="cerca" class="btn-primary btn-cerca">Verifica</button>
+            <?php if ($ristorante_attivo === '0'): ?>
+
+                <div class="alert alert--vuoto">
+                    <?= htmlspecialchars($errore) ?>
                 </div>
-            </form>
 
-            <!-- RISULTATO -->
-            <?php if ($cercato): ?>
-                <div class="risultati-wrap">
+            <?php else: ?>
 
-                    <?php if ($errore): ?>
-                        <div class="alert alert--errore"><?= htmlspecialchars($errore) ?></div>
+                <?php if ($selfservice === '1'): ?>
+                    <div class="alert alert--vuoto" style="margin-bottom: 24px;">
+                        ⚠️ Il ristorante è attualmente in modalità self-service per il pranzo. Le prenotazioni sono disponibili solo per la cena del sabato.
+                    </div>
+                <?php endif; ?>
 
-                    <?php elseif ($disponibilita): ?>
+                <form method="POST" class="form-ricerca">
+                    <div class="form-ricerca-grid">
+                        <div class="form-gruppo">
+                            <label for="data">Data</label>
+                            <input type="date" id="data" name="data"
+                                min="<?= date('Y-m-d') ?>"
+                                value="<?= htmlspecialchars($data_cercata) ?>"
+                                required>
+                        </div>
+                        <div class="form-gruppo">
+                            <label for="turno">Turno</label>
+                            <select id="turno" name="turno">
+                                <option value="pranzo" <?= $turno_cercato === 'pranzo' ? 'selected' : '' ?>>Pranzo</option>
+                                <option value="cena" <?= $turno_cercato === 'cena' ? 'selected' : '' ?>>Cena</option>
+                            </select>
+                        </div>
+                        <div class="form-gruppo">
+                            <label for="persone">Persone</label>
+                            <select id="persone" name="persone">
+                                <?php for ($i = 1; $i <= 20; $i++): ?>
+                                    <option value="<?= $i ?>" <?= $persone_cercate == $i ? 'selected' : '' ?>>
+                                        <?= $i ?> <?= $i === 1 ? 'persona' : 'persone' ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                        <button type="submit" name="cerca" class="btn-primary btn-cerca">Verifica</button>
+                    </div>
+                </form>
 
-                        <?php if ($disponibilita['ok']): ?>
-                            <div class="disponibilita-card disponibilita-card--ok">
-                                <div class="disponibilita-info">
-                                    <h3>Disponibilità confermata</h3>
-                                    <p>
-                                        <?= date('l d/m/Y', strtotime($data_cercata)) ?> —
-                                        <?= ucfirst($turno_cercato) ?> —
-                                        <?= $persone_cercate ?> <?= $persone_cercate === 1 ? 'persona' : 'persone' ?>
-                                    </p>
-                                    <p class="coperti-rimasti">Posti ancora disponibili: <strong><?= $disponibilita['liberi'] ?></strong></p>
+                <?php if ($cercato): ?>
+                    <div class="risultati-wrap">
+
+                        <?php if ($errore): ?>
+                            <div class="alert alert--errore"><?= htmlspecialchars($errore) ?></div>
+
+                        <?php elseif ($disponibilita): ?>
+
+                            <?php if ($disponibilita['ok']): ?>
+                                <div class="disponibilita-card disponibilita-card--ok">
+                                    <div class="disponibilita-info">
+                                        <h3>Disponibilità confermata</h3>
+                                        <p>
+                                            <?= date('l d/m/Y', strtotime($data_cercata)) ?> —
+                                            <?= ucfirst($turno_cercato) ?> —
+                                            <?= $persone_cercate ?> <?= $persone_cercate === 1 ? 'persona' : 'persone' ?>
+                                        </p>
+                                        <p class="coperti-rimasti">Posti ancora disponibili: <strong><?= $disponibilita['liberi'] ?></strong></p>
+                                    </div>
+                                    <a href="/zumzeri/prenota-ristorante-conferma.php?data=<?= urlencode($data_cercata) ?>&turno=<?= urlencode($turno_cercato) ?>&persone=<?= $persone_cercate ?>"
+                                        class="btn-primary">
+                                        Procedi con la prenotazione
+                                    </a>
                                 </div>
-                                <a href="/zumzeri/prenota-ristorante-conferma.php?data=<?= urlencode($data_cercata) ?>&turno=<?= urlencode($turno_cercato) ?>&persone=<?= $persone_cercate ?>"
-                                    class="btn-primary">
-                                    Procedi con la prenotazione
-                                </a>
-                            </div>
 
-                        <?php else: ?>
-                            <div class="alert alert--vuoto">
-                                <strong>Nessun posto disponibile</strong> per <?= $persone_cercate ?> <?= $persone_cercate === 1 ? 'persona' : 'persone' ?>
-                                il <?= date('d/m/Y', strtotime($data_cercata)) ?> a <?= $turno_cercato ?>.<br>
-                                Prova un altro giorno o un altro turno, oppure <a href="/zumzeri/contatti.php">contattaci</a> direttamente.
-                            </div>
+                            <?php else: ?>
+                                <div class="alert alert--vuoto">
+                                    <strong>Nessun posto disponibile</strong> per <?= $persone_cercate ?> <?= $persone_cercate === 1 ? 'persona' : 'persone' ?>
+                                    il <?= date('d/m/Y', strtotime($data_cercata)) ?> a <?= $turno_cercato ?>.<br>
+                                    Prova un altro giorno o un altro turno, oppure <a href="/zumzeri/contatti.php">contattaci</a> direttamente.
+                                </div>
+                            <?php endif; ?>
+
                         <?php endif; ?>
 
-                    <?php endif; ?>
+                    </div>
+                <?php endif; ?>
 
-                </div>
             <?php endif; ?>
 
         </div>

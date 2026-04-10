@@ -3,11 +3,32 @@ $titolo_pagina = 'Conferma prenotazione ristorante';
 require_once 'includes/header.php';
 require_once 'config/db.php';
 
+// Controlla modalità self-service e ristorante attivo
+$stmt = $pdo->prepare("SELECT valore FROM impostazioni WHERE chiave = 'modalita_selfservice'");
+$stmt->execute();
+$selfservice = $stmt->fetchColumn();
+
+$stmt = $pdo->prepare("SELECT valore FROM impostazioni WHERE chiave = 'ristorante_attivo'");
+$stmt->execute();
+$ristorante_attivo = $stmt->fetchColumn();
+
 $data    = $_GET['data'] ?? '';
 $turno   = $_GET['turno'] ?? '';
 $persone = (int)($_GET['persone'] ?? 0);
 
 if (!$data || !$turno || !$persone) {
+    header('Location: /zumzeri/prenota-ristorante.php');
+    exit;
+}
+
+// Blocca se ristorante disattivo
+if ($ristorante_attivo === '0') {
+    header('Location: /zumzeri/prenota-ristorante.php');
+    exit;
+}
+
+// Blocca se self-service e turno è pranzo
+if ($selfservice === '1' && $turno === 'pranzo') {
     header('Location: /zumzeri/prenota-ristorante.php');
     exit;
 }
@@ -32,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errore = 'Inserisci un indirizzo email valido.';
     } else {
-        // Verifica coperti ancora disponibili
         $stmt = $pdo->prepare("SELECT valore FROM impostazioni WHERE chiave = ?");
         $stmt->execute(['coperti_max_' . $turno]);
         $coperti_max = (int)($stmt->fetchColumn() ?? 40);
@@ -67,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $codice
             ]);
 
-            // Email di conferma
             require_once 'includes/mailer.php';
             invia_email_conferma_ristorante([
                 'nome'           => $nome,
