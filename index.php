@@ -126,41 +126,42 @@ require_once 'includes/header.php';
     </section>
 
     <!-- SERVIZI -->
-    <section class="section-servizi container">
-        <p class="section-label">Cosa offriamo</p>
-        <h2 class="section-title">Tutto quello che ti serve</h2>
-        <div class="servizi-grid">
-            <div class="servizio-item">
-                <div class="servizio-icon">&#9651;</div>
-                <h4>Sci e snowboard</h4>
-                <p>8 km di piste, snowpark da 750 m e anello di fondo da 12 km</p>
+    <section class="section-servizi">
+        <div class="container">
+            <p class="section-label">Tutto quello che ti serve</p>
+            <h2 class="section-title">Cosa offriamo</h2>
+            <div class="servizi-grid">
+                <div class="servizio-item">
+                    <div class="servizio-icon">&#9651;</div>
+                    <h4>Sci e snowboard</h4>
+                    <p>8 km di piste, snowpark da 750 m e anello di fondo da 12 km</p>
+                </div>
+                <div class="servizio-item">
+                    <div class="servizio-icon">&#9651;</div>
+                    <h4>Trekking ed escursioni</h4>
+                    <p>Sentieri per tutti i livelli tra Toscana, Liguria ed Emilia</p>
+                </div>
+                <div class="servizio-item">
+                    <div class="servizio-icon">&#9651;</div>
+                    <h4>Cucina lunigianese</h4>
+                    <p>Piatti tradizionali fatti in casa, ingredienti freschi e locali</p>
+                </div>
+                <div class="servizio-item">
+                    <div class="servizio-icon">&#9651;</div>
+                    <h4>Noleggio attrezzature</h4>
+                    <p>Sci, snowboard e tutto il necessario disponibile in loco</p>
+                </div>
+                <div class="servizio-item">
+                    <div class="servizio-icon">&#9651;</div>
+                    <h4>Pet friendly</h4>
+                    <p>I tuoi animali sono i benvenuti in entrambe le strutture</p>
+                </div>
+                <div class="servizio-item">
+                    <div class="servizio-icon">&#9651;</div>
+                    <h4>Wi-Fi gratuito</h4>
+                    <p>Connessione disponibile in tutte le aree delle strutture</p>
+                </div>
             </div>
-            <div class="servizio-item">
-                <div class="servizio-icon">&#9651;</div>
-                <h4>Trekking ed escursioni</h4>
-                <p>Sentieri per tutti i livelli tra Toscana, Liguria ed Emilia</p>
-            </div>
-            <div class="servizio-item">
-                <div class="servizio-icon">&#9651;</div>
-                <h4>Cucina lunigianese</h4>
-                <p>Piatti tradizionali fatti in casa, ingredienti freschi e locali</p>
-            </div>
-            <div class="servizio-item">
-                <div class="servizio-icon">&#9651;</div>
-                <h4>Noleggio attrezzature</h4>
-                <p>Sci, snowboard e tutto il necessario disponibile in loco</p>
-            </div>
-            <div class="servizio-item">
-                <div class="servizio-icon">&#9651;</div>
-                <h4>Pet friendly</h4>
-                <p>I tuoi animali sono i benvenuti in entrambe le strutture</p>
-            </div>
-            <div class="servizio-item">
-                <div class="servizio-icon">&#9651;</div>
-                <h4>Wi-Fi gratuito</h4>
-                <p>Connessione disponibile in tutte le aree delle strutture</p>
-            </div>
-        </div>
     </section>
 
 </main>
