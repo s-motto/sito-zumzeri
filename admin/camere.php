@@ -8,6 +8,7 @@ $errore = '';
 
 // Modifica camera
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salva_camera'])) {
+    verifica_csrf();
     $id     = (int)$_POST['id'];
     $prezzo = (float)str_replace(',', '.', $_POST['prezzo'] ?? 0);
     $stato  = $_POST['stato'] ?? 'disponibile';
@@ -100,6 +101,7 @@ foreach ($camere as $camera) {
                                 <td><?= $camera['posti'] ?> posti</td>
                                 <td>
                                     <form method="POST" class="form-stato" style="gap:4px;">
+                                        <input type="hidden" name="csrf_token" value="<?= genera_csrf() ?>">
                                         <input type="hidden" name="id" value="<?= $camera['id'] ?>">
                                         <div style="display:flex; flex-direction:column; gap:6px;">
                                             <div style="display:flex; align-items:center; gap:6px;">

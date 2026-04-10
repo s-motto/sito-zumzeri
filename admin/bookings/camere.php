@@ -5,6 +5,7 @@ require_once '../../config/db.php';
 
 // Cambio stato
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
+    verifica_csrf();
     $id    = (int)$_POST['id'];
     $stato = $_POST['stato'];
     $stati_validi = ['in_attesa', 'confermata', 'cancellata', 'completata'];
@@ -139,6 +140,7 @@ $prenotazioni = $stmt->fetchAll();
                                 <td><span class="stato-badge stato-<?= $p['stato'] ?>"><?= ucfirst(str_replace('_', ' ', $p['stato'])) ?></span></td>
                                 <td>
                                     <form method="POST" class="form-stato">
+                                        <input type="hidden" name="csrf_token" value="<?= genera_csrf() ?>">
                                         <input type="hidden" name="id" value="<?= $p['id'] ?>">
                                         <select name="stato" class="select-stato">
                                             <option value="in_attesa" <?= $p['stato'] === 'in_attesa'  ? 'selected' : '' ?>>In attesa</option>

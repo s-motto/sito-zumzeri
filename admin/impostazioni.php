@@ -6,11 +6,12 @@ require_once '../config/db.php';
 $messaggio = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifica_csrf();
     $impostazioni = [
-        'stagione'            => $_POST['stagione'] ?? 'estate',
-        'ristorante_attivo'   => isset($_POST['ristorante_attivo']) ? '1' : '0',
-        'coperti_max_pranzo'  => (int)($_POST['coperti_max_pranzo'] ?? 40),
-        'coperti_max_cena'    => (int)($_POST['coperti_max_cena'] ?? 40),
+        'stagione'             => $_POST['stagione'] ?? 'estate',
+        'ristorante_attivo'    => isset($_POST['ristorante_attivo']) ? '1' : '0',
+        'coperti_max_pranzo'   => (int)($_POST['coperti_max_pranzo'] ?? 40),
+        'coperti_max_cena'     => (int)($_POST['coperti_max_cena'] ?? 40),
         'modalita_selfservice' => isset($_POST['modalita_selfservice']) ? '1' : '0',
     ];
 
@@ -73,6 +74,7 @@ foreach ($rows as $row) {
         <?php endif; ?>
 
         <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?= genera_csrf() ?>">
 
             <!-- STAGIONE -->
             <div class="admin-section" style="margin-bottom: 20px;">
@@ -117,7 +119,7 @@ foreach ($rows as $row) {
                     <div class="imp-row">
                         <div class="imp-label">
                             <strong>Modalità self-service</strong>
-                            <span>Attiva in inverno durante l'apertura degli impianti — disabilita le prenotazioni online</span>
+                            <span>Attiva in inverno — disabilita le prenotazioni online solo per il pranzo, la cena rimane prenotabile</span>
                         </div>
                         <div class="imp-control">
                             <label class="toggle">
