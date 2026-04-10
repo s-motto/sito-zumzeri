@@ -10,8 +10,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
     $stato = $_POST['stato'];
     $stati_validi = ['in_attesa', 'confermata', 'cancellata', 'completata'];
     if (in_array($stato, $stati_validi)) {
+        // Leggi stato precedente
+        $stmt = $pdo->prepare("SELECT stato FROM prenotazioni_camere WHERE id = ?");
+        $stmt->execute([$id]);
+        $stato_precedente = $stmt->fetchColumn();
+
         $stmt = $pdo->prepare("UPDATE prenotazioni_camere SET stato = ? WHERE id = ?");
         $stmt->execute([$stato, $id]);
+
+        // Invia email di cancellazione solo se lo stato cambia a "cancellata"
+        if ($stato === 'cancellata' && $stato_precedente !== 'cancellata') {
+            $stmt = $pdo->prepare("
+                SELECT pc.*, c.numero, c.piano
+                FROM prenotazioni_camere pc
+                JOIN camere c ON pc.camera_id = c.id
+                WHERE pc.id = ?
+            ");
+            $stmt->execute([$id]);
+            $prenotazione = $stmt->fetch();
+
+            if ($prenotazione) {
+                require_once '../../includes/mailer.php';
+                invia_email_cancellazione_camera([
+                    'nome'      => $prenotazione['nome'],
+                    'cognome'   => $prenotazione['cognome'],
+                    'email'     => $prenotazione['email'],
+                    'codice'    => $prenotazione['codice'],
+                    'numero'    => $prenotazione['numero'],
+                    'piano'     => $prenotazione['piano'],
+                    'check_in'  => $prenotazione['check_in'],
+                    'check_out' => $prenotazione['check_out'],
+                ]);
+            }
+        }
     }
     header('Location: /zumzeri/admin/bookings/camere.php');
     exit;

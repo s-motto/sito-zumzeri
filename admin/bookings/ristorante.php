@@ -10,8 +10,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
     $stato = $_POST['stato'];
     $stati_validi = ['in_attesa', 'confermata', 'cancellata'];
     if (in_array($stato, $stati_validi)) {
+        // Leggi stato precedente
+        $stmt = $pdo->prepare("SELECT stato FROM prenotazioni_ristorante WHERE id = ?");
+        $stmt->execute([$id]);
+        $stato_precedente = $stmt->fetchColumn();
+
         $stmt = $pdo->prepare("UPDATE prenotazioni_ristorante SET stato = ? WHERE id = ?");
         $stmt->execute([$stato, $id]);
+
+        // Invia email di cancellazione solo se lo stato cambia a "cancellata"
+        if ($stato === 'cancellata' && $stato_precedente !== 'cancellata') {
+            $stmt = $pdo->prepare("SELECT * FROM prenotazioni_ristorante WHERE id = ?");
+            $stmt->execute([$id]);
+            $prenotazione = $stmt->fetch();
+
+            if ($prenotazione) {
+                $giorni_ita = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+                $giorno_num = (int)date('w', strtotime($prenotazione['giorno']));
+                $data_leggibile = $giorni_ita[$giorno_num] . ' ' . date('d/m/Y', strtotime($prenotazione['giorno']));
+
+                require_once '../../includes/mailer.php';
+                invia_email_cancellazione_ristorante([
+                    'nome'           => $prenotazione['nome'],
+                    'cognome'        => $prenotazione['cognome'],
+                    'email'          => $prenotazione['email'],
+                    'codice'         => $prenotazione['codice'],
+                    'data_leggibile' => $data_leggibile,
+                    'turno'          => $prenotazione['turno'],
+                    'persone'        => $prenotazione['persone'],
+                ]);
+            }
+        }
     }
     header('Location: /zumzeri/admin/bookings/ristorante.php');
     exit;
