@@ -40,7 +40,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambia_stato'])) {
             }
         }
     }
-    header('Location: /zumzeri/admin/bookings/ristorante.php');
+    header('Location: /zumzeri/admin/bookings/ristorante.php?' . http_build_query(['stato' => $_GET['stato'] ?? '', 'cerca' => $_GET['cerca'] ?? '']));
+    exit;
+}
+
+// Salva nota admin
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salva_nota'])) {
+    verifica_csrf();
+    $id         = (int)$_POST['id'];
+    $nota_admin = trim($_POST['nota_admin'] ?? '');
+    $stmt = $pdo->prepare("UPDATE prenotazioni_ristorante SET note_admin = ? WHERE id = ?");
+    $stmt->execute([$nota_admin, $id]);
+    header('Location: /zumzeri/admin/bookings/ristorante.php?' . http_build_query(['stato' => $_GET['stato'] ?? '', 'cerca' => $_GET['cerca'] ?? '']));
     exit;
 }
 
@@ -81,9 +92,9 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv') {
     header('Pragma: no-cache');
 
     $out = fopen('php://output', 'w');
-    fprintf($out, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM per Excel
+    fprintf($out, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-    fputcsv($out, ['Codice', 'Nome', 'Cognome', 'Email', 'Telefono', 'Data', 'Turno', 'Persone', 'Stato', 'Note', 'Ricevuta il'], ';');
+    fputcsv($out, ['Codice', 'Nome', 'Cognome', 'Email', 'Telefono', 'Data', 'Turno', 'Persone', 'Stato', 'Note cliente', 'Note admin', 'Ricevuta il'], ';');
 
     foreach ($prenotazioni as $p) {
         $giorno_num = (int)date('w', strtotime($p['giorno']));
@@ -99,6 +110,7 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv') {
             $p['persone'],
             ucfirst(str_replace('_', ' ', $p['stato'])),
             $p['note'] ?? '',
+            $p['note_admin'] ?? '',
             date('d/m/Y H:i', strtotime($p['creata_il'])),
         ], ';');
     }
@@ -116,6 +128,54 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv') {
     <title>Prenotazioni ristorante — Zum Zeri Admin</title>
     <link rel="stylesheet" href="/zumzeri/assets/css/style.css">
     <link rel="stylesheet" href="/zumzeri/assets/css/admin.css">
+    <style>
+        .nota-admin-form {
+            margin-top: 10px;
+        }
+
+        .nota-admin-label {
+            font-size: 10px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--colore-legno);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .nota-admin-form textarea {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #e8d5b0;
+            border-radius: 2px;
+            font-size: 12px;
+            font-family: var(--font-testo);
+            color: var(--colore-terra);
+            resize: vertical;
+            min-height: 52px;
+            background: #fffef9;
+        }
+
+        .nota-admin-form textarea:focus {
+            outline: none;
+            border-color: var(--colore-legno);
+        }
+
+        .btn-nota {
+            font-size: 11px;
+            padding: 3px 10px;
+            background: var(--colore-sabbia);
+            border: 1px solid #e8d5b0;
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: var(--font-testo);
+            color: var(--colore-terra);
+            margin-top: 4px;
+        }
+
+        .btn-nota:hover {
+            background: #e8d5b0;
+        }
+    </style>
 </head>
 
 <body class="admin-body">
@@ -143,7 +203,6 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv') {
                 class="btn-admin-filtro" style="text-decoration:none;">↓ Esporta CSV</a>
         </div>
 
-        <!-- FILTRI -->
         <form method="GET" class="admin-filtri">
             <input type="text" name="cerca" placeholder="Cerca per nome, email o codice..."
                 value="<?= htmlspecialchars($filtro_cerca) ?>">
@@ -161,12 +220,9 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv') {
 
         <div style="font-size:12px; color:#aaa; margin-bottom:12px;">
             <?= count($prenotazioni) ?> prenotazioni
-            <?php if ($filtro_stato || $filtro_cerca): ?>
-                — il CSV esporterà solo i risultati filtrati
-            <?php endif; ?>
+            <?php if ($filtro_stato || $filtro_cerca): ?> — il CSV esporterà solo i risultati filtrati<?php endif; ?>
         </div>
 
-        <!-- TABELLA -->
         <div class="admin-section">
             <table class="admin-table">
                 <thead>
@@ -177,7 +233,7 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv') {
                         <th>Turno</th>
                         <th>Persone</th>
                         <th>Stato</th>
-                        <th>Azioni</th>
+                        <th>Azioni e note</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -195,12 +251,8 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv') {
                                 <td>
                                     <strong><?= htmlspecialchars($p['nome'] . ' ' . $p['cognome']) ?></strong><br>
                                     <small><?= htmlspecialchars($p['email']) ?></small>
-                                    <?php if ($p['telefono']): ?>
-                                        <br><small><?= htmlspecialchars($p['telefono']) ?></small>
-                                    <?php endif; ?>
-                                    <?php if ($p['note']): ?>
-                                        <br><small class="nota-prenotazione">📝 <?= htmlspecialchars($p['note']) ?></small>
-                                    <?php endif; ?>
+                                    <?php if ($p['telefono']): ?><br><small><?= htmlspecialchars($p['telefono']) ?></small><?php endif; ?>
+                                    <?php if ($p['note']): ?><br><small class="nota-prenotazione">📝 <?= htmlspecialchars($p['note']) ?></small><?php endif; ?>
                                 </td>
                                 <td><?= $data_leggibile ?></td>
                                 <td><?= ucfirst($p['turno']) ?></td>
@@ -216,6 +268,14 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv') {
                                             <option value="cancellata" <?= $p['stato'] === 'cancellata' ? 'selected' : '' ?>>Cancellata</option>
                                         </select>
                                         <button type="submit" name="cambia_stato" class="btn-stato">Aggiorna</button>
+                                    </form>
+
+                                    <form method="POST" class="nota-admin-form">
+                                        <input type="hidden" name="csrf_token" value="<?= genera_csrf() ?>">
+                                        <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                        <span class="nota-admin-label">🔒 Nota interna</span>
+                                        <textarea name="nota_admin" rows="2" placeholder="Visibile solo dallo staff..."><?= htmlspecialchars($p['note_admin'] ?? '') ?></textarea>
+                                        <button type="submit" name="salva_nota" class="btn-nota">Salva nota</button>
                                     </form>
                                 </td>
                             </tr>
