@@ -83,7 +83,12 @@ require_once 'includes/header.php';
             <p class="section-label">Scrivici</p>
             <h2 class="section-title">Hai una domanda?</h2>
             <p class="section-sub">Per informazioni su prenotazioni, disponibilità o qualsiasi altra cosa — siamo qui.</p>
-
+            <?php
+            if (isset($_GET['inviato'])): ?>
+                <div class="alert alert--ok" style="margin-bottom: 24px;">Messaggio inviato correttamente. Ti risponderemo al più presto!</div>
+            <?php elseif (isset($_GET['errore'])): ?>
+                <div class="alert alert--errore" style="margin-bottom: 24px;"><?= htmlspecialchars($_GET['errore']) ?></div>
+            <?php endif; ?>
             <form class="form-contatto" action="invia-contatto.php" method="POST">
                 <div class="form-row">
                     <div class="form-gruppo">
