@@ -94,6 +94,7 @@ $giorni_ita = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Ven
         <nav class="admin-nav">
             <a href="/zumzeri/admin/index.php">Dashboard</a>
             <a href="/zumzeri/admin/bookings/camere.php">Prenotazioni camere</a>
+            <a href="/zumzeri/admin/calendario.php">Calendario camere</a>
             <a href="/zumzeri/admin/bookings/ristorante.php" class="active">Prenotazioni ristorante</a>
             <a href="/zumzeri/admin/camere.php">Gestione camere</a>
             <a href="/zumzeri/admin/impostazioni.php">Impostazioni</a>
