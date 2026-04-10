@@ -1,0 +1,591 @@
+/* ── PAGE HERO ── */
+.page-hero {
+  position: relative;
+  height: 55vh;
+  min-height: 360px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.page-hero--granbaita { background-color: #4a3a28; }
+.page-hero--rifugio   { background-color: #3a3020; }
+.page-hero--attivita  { background-color: #2a3828; }
+.page-hero--contatti  { background-color: #3a3428; }
+
+.page-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,8,4,0.7) 0%, transparent 60%);
+}
+
+.page-hero-content {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 48px;
+}
+
+.page-hero-title {
+  font-family: var(--font-titoli);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+/* ── INTRO PAGINE ── */
+.page-intro {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 60px;
+  padding: 64px 24px;
+  align-items: start;
+}
+
+.intro-text p {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.intro-dati {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding-top: 8px;
+}
+
+.dato-item {
+  background: var(--colore-sabbia);
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+}
+
+.dato-item strong {
+  display: block;
+  font-family: var(--font-titoli);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--colore-legno);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.dato-item span {
+  font-size: 12px;
+  color: #999;
+  letter-spacing: 0.5px;
+}
+
+/* ── CAMERE GRAN BAITA ── */
+.section-camere {
+  background: var(--colore-sabbia);
+  padding: 64px 0;
+}
+
+.camere-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.camera-card {
+  background: #fff;
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.camera-img { height: 180px; }
+.camera-img--doppia    { background-color: #5a4a30; }
+.camera-img--tripla    { background-color: #4d3f28; }
+.camera-img--quadrupla { background-color: #403320; }
+
+.camera-body { padding: 20px; }
+
+.camera-tipo {
+  font-family: var(--font-titoli);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  margin-bottom: 8px;
+}
+
+.camera-desc {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.camera-dotazioni {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.camera-dotazioni li {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  background: var(--colore-sabbia);
+  color: var(--colore-terra);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid #e8d5b0;
+}
+
+.note-camere {
+  background: #fff;
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.note-camere p { font-size: 14px; color: #888; margin: 0; }
+.note-camere a { font-size: 13px; color: var(--colore-legno); white-space: nowrap; }
+
+/* ── SERVIZI GRAN BAITA ── */
+.section-servizi-gb { padding: 64px 24px; }
+
+.servizi-gb-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.servizio-gb {
+  padding: 20px;
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+}
+
+.servizio-gb strong {
+  display: block;
+  font-size: 14px;
+  color: var(--colore-terra);
+  margin-bottom: 4px;
+}
+
+.servizio-gb p { font-size: 13px; color: #999; margin: 0; }
+
+/* ── CTA ── */
+.cta-prenota {
+  background: var(--colore-notte);
+  padding: 64px 0;
+  text-align: center;
+}
+
+.cta-title {
+  font-family: var(--font-titoli);
+  font-size: 32px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.cta-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 28px;
+}
+
+/* ── MENU RIFUGIO ── */
+.section-menu {
+  background: var(--colore-sabbia);
+  padding: 64px 0;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.menu-categoria {
+  background: #fff;
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.menu-cat-title {
+  font-family: var(--font-titoli);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e8d5b0;
+  margin-bottom: 16px;
+}
+
+.menu-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.menu-lista li { display: flex; flex-direction: column; gap: 2px; }
+.menu-piatto { font-size: 14px; font-weight: 500; color: var(--colore-terra); }
+.menu-desc { font-size: 12px; color: #aaa; }
+
+/* ── ORARI RIFUGIO ── */
+.section-orari { padding: 64px 24px; }
+
+.orari-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.orario-card {
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  padding: 28px;
+}
+
+.orario-card--estate  { border-top: 3px solid #854F0B; }
+.orario-card--inverno { border-top: 3px solid #185FA5; }
+
+.orario-stagione {
+  font-family: var(--font-titoli);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  margin-bottom: 20px;
+}
+
+.orario-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0e8d8;
+  font-size: 14px;
+}
+
+.orario-row span { color: #888; }
+.orario-row strong { color: var(--colore-terra); font-weight: 500; }
+.orario-note { font-size: 12px; color: #aaa; font-style: italic; margin-top: 14px; }
+
+/* ── ATTIVITA ── */
+.stagione-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-bottom: 1px solid #e8d5b0;
+  background: #fff;
+}
+
+.stagione-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 48px;
+  font-family: var(--font-titoli);
+  font-size: 18px;
+  font-weight: 400;
+  color: #bbb;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: -1px;
+}
+
+.stagione-tab:hover { color: var(--colore-terra); }
+.stagione-tab.active { color: var(--colore-terra); border-bottom-color: var(--colore-legno); }
+.stagione-tab-icon { font-size: 16px; color: var(--colore-legno); opacity: 0.7; }
+
+.attivita-intro { padding: 56px 24px 32px; }
+
+.attivita-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 0 24px 64px;
+}
+
+.attivita-card {
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.2s;
+}
+
+.attivita-card:hover { transform: translateY(-3px); }
+.attivita-card-head { height: 160px; }
+
+.attivita-card-head--trekking   { background-color: #4a5a30; }
+.attivita-card-head--mtb        { background-color: #3a5028; }
+.attivita-card-head--gonfiabile { background-color: #5a3a50; }
+.attivita-card-head--natura     { background-color: #405030; }
+.attivita-card-head--sci        { background-color: #1a3050; }
+.attivita-card-head--scuola     { background-color: #1a2840; }
+.attivita-card-head--snowpark   { background-color: #203858; }
+.attivita-card-head--fondo      { background-color: #182838; }
+.attivita-card-head--ciaspole   { background-color: #1c3048; }
+
+.attivita-card-body { padding: 20px; }
+
+.attivita-card-body h3 {
+  font-family: var(--font-titoli);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  margin-bottom: 8px;
+}
+
+.attivita-card-body p { font-size: 13px; color: #888; line-height: 1.6; }
+
+/* ── IMPIANTI ── */
+.stato-impianti {
+  background: var(--colore-sabbia);
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  padding: 28px;
+  margin-bottom: 40px;
+}
+
+.impianti-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.impianti-header h3 {
+  font-family: var(--font-titoli);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--colore-terra);
+}
+
+.impianti-data { font-size: 12px; color: #aaa; }
+.impianti-grid { display: flex; flex-direction: column; gap: 0; }
+
+.impianto-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e8d5b0;
+  font-size: 14px;
+}
+
+.impianto-row:last-child { border-bottom: none; }
+.impianto-nome { color: var(--colore-terra); }
+
+.impianto-stato {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.stato--aperto   { background: #e8f5e9; color: #2e7d32; }
+.stato--chiuso   { background: #fce8e8; color: #c62828; }
+.stato--parziale { background: #fff8e1; color: #f57f17; }
+.impianti-note { font-size: 12px; color: #aaa; font-style: italic; margin-top: 16px; }
+
+/* ── SKIPASS ── */
+.section-skipass { padding: 0 24px 64px; }
+
+.skipass-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.skipass-box { border: 1px solid #e8d5b0; border-radius: 4px; padding: 28px; }
+
+.skipass-box h3 {
+  font-family: var(--font-titoli);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  margin-bottom: 10px;
+}
+
+.skipass-box p { font-size: 14px; color: #888; line-height: 1.6; margin-bottom: 14px; }
+.skipass-box a { font-size: 13px; color: var(--colore-legno); }
+
+/* ── WEBCAM ── */
+.section-webcam { padding: 64px 24px; }
+
+.webcam-grid { display: grid; gap: 32px; margin-bottom: 28px; }
+.webcam-grid--due { grid-template-columns: 1fr 1fr; }
+
+.webcam-card {
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.webcam-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.webcam-embed iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+.webcam-info { padding: 18px 20px; }
+
+.webcam-info h3 {
+  font-family: var(--font-titoli);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  margin-bottom: 6px;
+}
+
+.webcam-info p { font-size: 13px; color: #888; line-height: 1.5; margin-bottom: 12px; }
+.webcam-link { font-size: 13px; color: var(--colore-legno); }
+
+/* ── CONTATTI ── */
+.section-contatti { padding: 64px 24px; }
+
+.contatti-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.contatti-mappa {
+  height: 520px;
+  border: 1px solid #e8d5b0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: sticky;
+  top: 80px;
+}
+
+.contatto-blocco {
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #f0e8d8;
+}
+
+.contatto-blocco:last-child { border-bottom: none; margin-bottom: 0; }
+
+.contatto-blocco h3 {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--colore-legno);
+  margin-bottom: 8px;
+}
+
+.contatto-blocco p { font-size: 14px; color: #666; line-height: 1.7; }
+
+.contatto-blocco a {
+  display: block;
+  font-size: 15px;
+  color: var(--colore-terra);
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.contatto-blocco a:hover { color: var(--colore-legno); }
+.contatto-note { display: block; font-size: 12px; color: #aaa; margin-top: 4px; }
+
+.social-links { display: flex; gap: 16px; }
+
+.social-links a {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--colore-legno);
+  border: 1px solid #e8d5b0;
+  padding: 6px 16px;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.social-links a:hover { background: var(--colore-sabbia); }
+
+/* ── FORM CONTATTO ── */
+.section-form-contatto {
+  background: var(--colore-sabbia);
+  padding: 64px 0;
+}
+
+.form-contatto {
+  max-width: 680px;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.form-gruppo { display: flex; flex-direction: column; gap: 6px; }
+
+.form-gruppo label {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.form-gruppo input,
+.form-gruppo select,
+.form-gruppo textarea {
+  padding: 10px 14px;
+  border: 1px solid #e8d5b0;
+  border-radius: 2px;
+  font-size: 14px;
+  font-family: var(--font-testo);
+  color: var(--colore-terra);
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.form-gruppo input:focus,
+.form-gruppo select:focus,
+.form-gruppo textarea:focus {
+  outline: none;
+  border-color: var(--colore-legno);
+}
+
+.form-gruppo textarea { resize: vertical; }
+
+/* ── PRIVACY ── */
+.section-privacy { padding: 64px 24px; }
+
+.privacy-box { max-width: 780px; margin: 0 auto; }
+
+.privacy-box h2 {
+  font-family: var(--font-titoli);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--colore-terra);
+  margin: 36px 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8d5b0;
+}
+
+.privacy-box h2:first-child { margin-top: 0; }
+.privacy-box p { font-size: 14px; color: #666; line-height: 1.8; margin-bottom: 12px; }
+.privacy-box ul { margin: 0 0 12px 20px; font-size: 14px; color: #666; line-height: 1.8; }
+.privacy-box ul li { margin-bottom: 6px; }

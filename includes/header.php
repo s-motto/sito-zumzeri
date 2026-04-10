@@ -28,6 +28,11 @@ $meta_url         = $site_url . $_SERVER['REQUEST_URI'];
     <meta property="og:locale" content="it_IT">
 
     <link rel="stylesheet" href="/zumzeri/assets/css/style.css">
+    <link rel="stylesheet" href="/zumzeri/assets/css/home.css">
+    <link rel="stylesheet" href="/zumzeri/assets/css/pages.css">
+    <link rel="stylesheet" href="/zumzeri/assets/css/booking.css">
+    <link rel="stylesheet" href="/zumzeri/assets/css/responsive.css">
+    <script src="/zumzeri/assets/js/main.js" defer></script>
 </head>
 
 <body>
@@ -35,7 +40,13 @@ $meta_url         = $site_url . $_SERVER['REQUEST_URI'];
     <header class="site-header">
         <div class="header-inner">
             <a href="/zumzeri/index.php" class="logo">Zum Zeri</a>
-            <nav class="main-nav">
+            <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="main-nav" id="main-nav">
                 <a href="/zumzeri/gran-baita.php" class="<?= $pagina_corrente === 'gran-baita' ? 'active' : '' ?>">Gran Baita</a>
                 <a href="/zumzeri/rifugio.php" class="<?= $pagina_corrente === 'rifugio' ? 'active' : '' ?>">Rifugio</a>
                 <a href="/zumzeri/attivita.php" class="<?= $pagina_corrente === 'attivita' ? 'active' : '' ?>">Attività</a>

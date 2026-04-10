@@ -1,0 +1,138 @@
+/* ── RESPONSIVE MOBILE ── */
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  .header-inner { padding: 0 16px; }
+  .hamburger { display: flex; }
+
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #e8d5b0;
+    flex-direction: column;
+    padding: 8px 0;
+    z-index: 99;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .main-nav.open { display: flex; }
+
+  .main-nav a {
+    padding: 12px 24px;
+    font-size: 14px;
+    border-left: none;
+    color: var(--colore-terra);
+  }
+
+  .main-nav .btn-prenota {
+    margin: 8px 24px;
+    text-align: center;
+    padding: 12px 20px;
+  }
+
+  /* HERO */
+  .hero { padding-bottom: 32px; }
+  .hero-title { font-size: 36px; }
+  .hero-ctas { flex-direction: column; gap: 8px; }
+  .btn-primary, .btn-outline { text-align: center; }
+
+  /* INFO BAR */
+  .info-bar { flex-wrap: wrap; }
+  .info-item {
+    width: 50%;
+    border-right: none;
+    border-bottom: 1px solid #e8d5b0;
+  }
+
+  /* CARDS STRUTTURE */
+  .cards-strutture { grid-template-columns: 1fr; }
+
+  /* SEZIONE PRENOTA HOME */
+  .prenota-form { flex-direction: column; align-items: stretch; }
+  .form-field { width: 100%; }
+  .form-field input, .form-field select { min-width: 100%; width: 100%; }
+  .btn-prenota-form { width: 100%; }
+
+  /* SERVIZI HOME */
+  .servizi-grid { grid-template-columns: 1fr 1fr; }
+
+  /* PAGE HERO */
+  .page-hero-title { font-size: 28px; }
+
+  /* INTRO PAGINE */
+  .page-intro { grid-template-columns: 1fr; gap: 32px; padding: 40px 16px; }
+  .intro-dati { grid-template-columns: 1fr 1fr; }
+
+  /* CAMERE */
+  .camere-grid { grid-template-columns: 1fr; }
+
+  /* SERVIZI GRAN BAITA */
+  .servizi-gb-grid { grid-template-columns: 1fr 1fr; }
+
+  /* MENU RIFUGIO */
+  .menu-grid { grid-template-columns: 1fr; }
+
+  /* ORARI */
+  .orari-grid { grid-template-columns: 1fr; }
+
+  /* SKIPASS */
+  .skipass-grid { grid-template-columns: 1fr; }
+
+  /* STAGIONE SELECTOR */
+  .stagione-tab { padding: 16px 28px; font-size: 16px; }
+
+  /* ATTIVITA GRID */
+  .attivita-grid { grid-template-columns: 1fr; }
+
+  /* WEBCAM */
+  .webcam-grid--due { grid-template-columns: 1fr; }
+
+  /* CONTATTI */
+  .contatti-grid { grid-template-columns: 1fr; }
+  .contatti-mappa { height: 300px; position: static; }
+
+  /* FORM RICERCA PRENOTAZIONE */
+  .form-ricerca-grid { grid-template-columns: 1fr 1fr; }
+  .btn-cerca { grid-column: 1 / -1; }
+
+  /* PAGINE PRENOTAZIONE */
+  .section-prenota-page { padding: 24px 0 60px; }
+  .section-prenota-page .container { padding: 0 16px; }
+  .form-dati-cliente { max-width: 100%; }
+  .riepilogo-camera { margin-bottom: 24px; }
+  .form-ricerca { padding: 16px; }
+  .prenota-page-tabs { margin-bottom: 20px; }
+
+  /* FORM CONTATTO */
+  .form-row { grid-template-columns: 1fr; }
+
+  /* RISTORANTE */
+  .ristorante-info-box { grid-template-columns: 1fr 1fr; }
+  .disponibilita-card { flex-direction: column; align-items: flex-start; }
+
+  /* FOOTER */
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+  /* CONTAINER PADDING */
+  .container { padding: 0 16px; }
+  .section-strutture,
+  .section-orari,
+  .section-servizi-gb { padding: 40px 16px; }
+}
+
+@media (max-width: 480px) {
+  .servizi-grid { grid-template-columns: 1fr; }
+  .servizi-gb-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .info-item { width: 100%; }
+}
+
+@media (max-width: 380px) {
+  .form-ricerca-grid { grid-template-columns: 1fr; }
+  .btn-cerca { grid-column: 1; }
+}
