@@ -1,5 +1,6 @@
 <?php
 $titolo_pagina = 'Webcam';
+$meta_descrizione = 'Webcam live di Zum Zeri: guarda il Passo dei Due Santi in tempo reale prima di partire.';
 require_once 'includes/header.php';
 ?>
 

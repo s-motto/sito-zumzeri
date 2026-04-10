@@ -1,5 +1,6 @@
 <?php
 $titolo_pagina = 'Prenota';
+$meta_descrizione = 'Prenota una camera alla Gran Baita Lunigiana: verifica disponibilità e prenota online in pochi click.';
 require_once 'includes/header.php';
 require_once 'config/db.php';
 

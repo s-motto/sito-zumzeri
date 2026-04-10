@@ -1,5 +1,6 @@
 <?php
 $titolo_pagina = 'Rifugio Faggio Crociato';
+$meta_descrizione = 'Rifugio Faggio Crociato: ristorante e bar a Zum Zeri. Cucina lunigianese tradizionale, piatti fatti in casa. Aperto sabato e domenica.';
 require_once 'includes/header.php';
 ?>
 

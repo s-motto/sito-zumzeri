@@ -1,5 +1,6 @@
 <?php
 $titolo_pagina = 'Contatti';
+$meta_descrizione = 'Contatti Zum Zeri: come arrivare al Passo dei Due Santi, Zeri (MS). Telefono, email e mappa.';
 require_once 'includes/header.php';
 ?>
 

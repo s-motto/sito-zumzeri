@@ -1,5 +1,11 @@
 <?php
 $pagina_corrente = basename($_SERVER['PHP_SELF'], '.php');
+$site_url = 'https://www.zumzeri.it';
+
+// Valori di default — ogni pagina può sovrascriverli
+$meta_titolo      = $titolo_pagina ?? 'Zum Zeri';
+$meta_descrizione = $meta_descrizione ?? 'Zum Zeri — Rifugio e hotel a Passo dei Due Santi, Zeri (MS). Sci, trekking, cucina lunigianese. Prenota camere e tavoli online.';
+$meta_url         = $site_url . $_SERVER['REQUEST_URI'];
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -7,7 +13,20 @@ $pagina_corrente = basename($_SERVER['PHP_SELF'], '.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $titolo_pagina ?? 'Zum Zeri' ?> — Passo dei Due Santi</title>
+
+    <title><?= htmlspecialchars($meta_titolo) ?> — Zum Zeri · Passo dei Due Santi</title>
+    <meta name="description" content="<?= htmlspecialchars($meta_descrizione) ?>">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="<?= htmlspecialchars($meta_url) ?>">
+
+    <!-- Open Graph (Facebook, WhatsApp, ecc.) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<?= htmlspecialchars($meta_titolo) ?> — Zum Zeri">
+    <meta property="og:description" content="<?= htmlspecialchars($meta_descrizione) ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($meta_url) ?>">
+    <meta property="og:site_name" content="Zum Zeri">
+    <meta property="og:locale" content="it_IT">
+
     <link rel="stylesheet" href="/zumzeri/assets/css/style.css">
 </head>
 

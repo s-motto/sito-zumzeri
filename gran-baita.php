@@ -1,5 +1,6 @@
 <?php
 $titolo_pagina = 'Gran Baita Lunigiana';
+$meta_descrizione = 'Gran Baita Lunigiana: hotel con 23 camere a Passo dei Due Santi. Bagno privato, wi-fi, pet friendly. Ideale per famiglie e gruppi.';
 require_once 'includes/header.php';
 ?>
 

@@ -1,5 +1,6 @@
 <?php
 $titolo_pagina = 'Attività';
+$meta_descrizione = 'Attività a Zum Zeri: sci, snowboard, trekking, mountain bike. 8 km di piste da sci, snowpark e anello di fondo a 1400 m sul mare.';
 require_once 'includes/header.php';
 ?>
 

@@ -1,5 +1,6 @@
 <?php
 $titolo_pagina = 'Home';
+$meta_descrizione = 'Zum Zeri a Passo dei Due Santi, Zeri (MS): hotel, ristorante, sci e trekking a 1400 m. Prenota camere e tavoli direttamente online.';
 require_once 'includes/header.php';
 ?>
 
