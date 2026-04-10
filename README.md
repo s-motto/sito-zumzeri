@@ -12,7 +12,7 @@ Progetto in sviluppo per il sito ufficiale di **Zum Zeri**, rifugio e hotel al P
 - **MySQL** — database prenotazioni e impostazioni
 - **HTML5 / CSS3** — struttura e stile
 - **JavaScript** — toggle stagionale, hamburger menu
-- **PHPMailer** — invio email di conferma prenotazioni
+- **PHPMailer** — invio email automatiche
 - **Composer** — gestione dipendenze PHP
 
 ---
@@ -33,14 +33,18 @@ Progetto in sviluppo per il sito ufficiale di **Zum Zeri**, rifugio e hotel al P
 
 - Ricerca disponibilità camere per date e numero ospiti
 - Prenotazione tavoli ristorante (sabato/domenica, verifica coperti)
-- Email di conferma automatica con codice univoco (PHPMailer)
-- Blocco automatico in modalità self-service invernale
+- Email automatica al cliente alla ricezione, conferma e cancellazione della prenotazione
+- Blocco automatico in modalità self-service invernale (solo pranzo — la cena rimane prenotabile)
 
 ### Pannello amministratore
 
 - Login protetto con sessione PHP e password hashata (bcrypt)
+- Protezione CSRF su tutti i form
 - Dashboard con statistiche prenotazioni del giorno
 - Gestione prenotazioni camere e ristorante (lista, filtri, cambio stato)
+- Calendario camere vista Gantt mensile
+- Export CSV prenotazioni con filtri attivi
+- Note interne per ogni prenotazione (visibili solo dallo staff)
 - Gestione camere (prezzi, stato, note)
 - Impostazioni globali: stagione, modalità self-service, coperti massimi
 
@@ -50,42 +54,51 @@ Progetto in sviluppo per il sito ufficiale di **Zum Zeri**, rifugio e hotel al P
 
 ```
 zumzeri/
-├── admin/                  # Pannello amministratore
-│   ├── auth/session.php    # Gestione sessioni
-│   ├── bookings/           # Gestione prenotazioni
-│   ├── camere.php          # Gestione camere
-│   ├── impostazioni.php    # Impostazioni globali
-│   ├── index.php           # Dashboard
-│   └── login.php           # Login admin
+├── admin/                          # Pannello amministratore
+│   ├── auth/session.php            # Sessioni e CSRF
+│   ├── bookings/
+│   │   ├── camere.php              # Prenotazioni camere
+│   │   └── ristorante.php         # Prenotazioni ristorante
+│   ├── calendario.php              # Calendario Gantt camere
+│   ├── camere.php                  # Gestione camere
+│   ├── impostazioni.php            # Impostazioni globali
+│   ├── index.php                   # Dashboard
+│   └── login.php                   # Login admin
 ├── assets/
-│   ├── css/                # Fogli di stile (divisi per sezione)
-│   ├── img/                # Immagini e loghi
-│   └── js/main.js          # JavaScript
+│   ├── css/                        # CSS diviso per sezione
+│   │   ├── style.css               # Base, header, footer, utility
+│   │   ├── home.css                # Hero, sezioni home
+│   │   ├── pages.css               # Pagine interne
+│   │   ├── booking.css             # Prenotazioni
+│   │   ├── admin.css               # Pannello admin
+│   │   └── responsive.css          # Media query mobile
+│   ├── img/                        # Immagini e loghi
+│   └── js/main.js                  # JavaScript
 ├── config/
-│   └── db.php              # Connessione PDO al database
+│   └── db.php                      # Connessione PDO
 ├── includes/
-│   ├── footer.php          # Footer riutilizzabile
-│   ├── header.php          # Header e navbar riutilizzabili
-│   └── mailer.php          # Funzioni invio email (PHPMailer)
-├── vendor/                 # Dipendenze Composer (non committato)
-├── .env                    # Credenziali SMTP (non committato)
-├── .env.example            # Template credenziali
+│   ├── footer.php                  # Footer riutilizzabile
+│   ├── header.php                  # Header e navbar
+│   └── mailer.php                  # Funzioni email (PHPMailer)
+├── vendor/                         # Dipendenze Composer (non committato)
+├── .env                            # Credenziali SMTP (non committato)
+├── .env.example                    # Template credenziali
 ├── .gitignore
 ├── composer.json
 ├── robots.txt
 ├── sitemap.xml
-├── index.php               # Home
-├── gran-baita.php          # Pagina hotel
-├── rifugio.php             # Pagina ristorante
-├── attivita.php            # Pagina attività
-├── webcam.php              # Pagina webcam
-├── contatti.php            # Pagina contatti
-├── prenota.php             # Prenotazione camere
-├── prenota-camera.php      # Conferma prenotazione camera
-├── prenota-ristorante.php  # Prenotazione ristorante
+├── index.php                       # Home
+├── gran-baita.php                  # Pagina hotel
+├── rifugio.php                     # Pagina ristorante
+├── attivita.php                    # Pagina attività
+├── webcam.php                      # Pagina webcam
+├── contatti.php                    # Pagina contatti
+├── prenota.php                     # Prenotazione camere
+├── prenota-camera.php              # Conferma prenotazione camera
+├── prenota-ristorante.php          # Prenotazione ristorante
 ├── prenota-ristorante-conferma.php
-├── invia-contatto.php      # Gestione form contatti
-└── privacy.php             # Privacy policy
+├── invia-contatto.php              # Gestione form contatti
+└── privacy.php                     # Privacy policy
 ```
 
 ---
@@ -170,6 +183,8 @@ Avvia Apache e MySQL da XAMPP e vai su `http://localhost/zumzeri`.
 - Questo progetto è in fase di sviluppo — alcuni contenuti (telefono, email, prezzi camere) sono ancora placeholder in attesa dei dati definitivi
 - Le credenziali SMTP sono gestite tramite variabili d'ambiente (`.env`) e non sono mai nel codice
 - Le password admin sono hashate con bcrypt (`password_hash` / `password_verify`)
+- Tutti i form admin sono protetti con token CSRF
+- Le email automatiche (ricezione, conferma, cancellazione) partono solo al primo cambio di stato — nessun duplicato
 - Il pannello admin è escluso dall'indicizzazione tramite `robots.txt`
 - I prezzi delle camere sono placeholder — da aggiornare dal pannello admin
 
