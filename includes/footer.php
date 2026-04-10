@@ -26,7 +26,24 @@
         <a href="/zumzeri/privacy.php">Privacy Policy</a>
     </div>
 </footer>
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-banner-inner">
+        <p>Questo sito utilizza solo cookie tecnici necessari al funzionamento. Non raccogliamo dati a fini pubblicitari. <a href="/zumzeri/privacy.php">Privacy Policy</a></p>
+        <button onclick="accettaCookie()" class="cookie-btn">Ho capito</button>
+    </div>
+</div>
 
+<script>
+    function accettaCookie() {
+        localStorage.setItem('cookie_accettati', '1');
+        document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    if (!localStorage.getItem('cookie_accettati')) {
+        document.getElementById('cookie-banner').style.display = 'flex';
+    }
+</script>
 </body>
 
 </html>
