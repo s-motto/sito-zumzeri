@@ -9,8 +9,18 @@
 }
 
 .page-hero--granbaita { background-color: #4a3a28; }
-.page-hero--rifugio   { background-color: #3a3020; }
-.page-hero--attivita  { background-color: #2a3828; }
+.page-hero--rifugio {
+  background-color: #3a3020;
+  background-image: url('/zumzeri/assets/img/zum-zeri-rifugio-passo-dei-due-santi-bar.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.page-hero--attivita {
+  background-color: #2a3828;
+  background-image: url('/zumzeri/assets/img/zum-zeri-piste-sci.jpg');
+  background-size: cover;
+  background-position: center;
+}
 .page-hero--contatti  { background-color: #3a3428; }
 
 .page-hero-overlay {

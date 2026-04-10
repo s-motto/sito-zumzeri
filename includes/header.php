@@ -39,7 +39,9 @@ $meta_url         = $site_url . $_SERVER['REQUEST_URI'];
 
     <header class="site-header">
         <div class="header-inner">
-            <a href="/zumzeri/index.php" class="logo">Zum Zeri</a>
+            <a href="/zumzeri/index.php" class="logo">
+                <img src="/zumzeri/assets/img/logo.png" alt="Zum Zeri" class="logo-img">
+            </a>
             <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
                 <span></span>
                 <span></span>

@@ -295,3 +295,19 @@ a { color: inherit; text-decoration: none; }
   color: #2e7d32;
   border: 1px solid #a5d6a7;
 }
+
+/* ── LOGO ── */
+.logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
+  filter: invert(1); /* il logo è bianco, su sfondo chiaro lo invertiamo */
+}
+
+.logo-footer-img {
+  height: 36px;
+  width: auto;
+  display: block;
+  margin-bottom: 10px;
+  /* sul footer scuro il logo bianco va bene così com'è */
+}

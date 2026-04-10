@@ -13,17 +13,17 @@
   position: absolute;
   inset: 0;
   background-color: #3d3020;
-  background-image:
-    radial-gradient(ellipse at 70% 40%, rgba(133,79,11,0.3) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 60%, rgba(61,46,16,0.5) 0%, transparent 50%);
-  transition: background-color 0.8s ease, background-image 0.8s ease;
+  background-image: url('/zumzeri/assets/img/zum-zeri-autunno.jpg');
+  background-size: cover;
+  background-position: center;
+  transition: background-color 0.8s ease;
 }
 
 .hero-bg--inverno {
   background-color: #0d1e35;
-  background-image:
-    radial-gradient(ellipse at 70% 30%, rgba(24,95,165,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 70%, rgba(13,30,53,0.6) 0%, transparent 50%);
+  background-image: url('/zumzeri/assets/img/zum-zeri-piste-sci.jpg');
+  background-size: cover;
+  background-position: center top;
 }
 
 .hero-overlay {
@@ -144,7 +144,12 @@
   background: var(--colore-sabbia);
 }
 
-.card-img--rifugio   { background-color: #5a4a30; }
+.card-img--rifugio {
+  background-color: #5a4a30;
+  background-image: url('/zumzeri/assets/img/zum-zeri-rifugio-passo-dei-due-santi-bar.jpg');
+  background-size: cover;
+  background-position: center;
+}
 .card-img--granbaita { background-color: #4a3a28; }
 
 .card-body { padding: 20px 24px; }

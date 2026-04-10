@@ -1,7 +1,9 @@
 <footer class="site-footer">
     <div class="footer-inner">
         <div class="footer-col">
-            <span class="footer-logo">Zum Zeri</span>
+            <span class="footer-logo">
+                <img src="/zumzeri/assets/img/logo.png" alt="Zum Zeri" class="logo-footer-img">
+            </span>
             <p>Passo dei Due Santi, Zeri (MS)<br>
                 Lunigiana — 1400 m s.l.m.</p>
         </div>
